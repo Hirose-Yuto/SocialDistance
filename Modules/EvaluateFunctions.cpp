@@ -16,19 +16,17 @@ double EvaluateFunctions::f1(Operation* operation) {
 
         // 移動コスト
         value -= Field::satisfactionDiff(Field::distance(operation->position, student->getPosition()));
+        //std::cout << "move: " << value << std::endl;
 
         // 会話考慮
-        value += Utilities::howManyPeople(operation->position, 2) * 100;
+        value += Utilities::howManyPeople(operation->position, 2) * 1000;
+        //std::cout << "conv: " << value << std::endl;
 
         // SocialDistance考慮
-        value += (Utilities::howManyPeople(student->getPosition(), 2) - Utilities::howManyPeople(operation->position, 2)) * 15;
+        // value += (1 - exp(-(Utilities::howManyPeople(student->getPosition(), 2) - Utilities::howManyPeople(operation->position, 2)))) * 1000;
+        value += (12 - Utilities::howManyPeople(operation->position, 2)) * 80;
+        // std::cout << "social: " << value << std::endl;
 
-        for (Student *infectedStudent : Field::infectedStudents) {
-            value -= Utilities::howManyNotInfectedPeople(infectedStudent->getPosition(), 1) * ONE_METER_INFECTION_PROB *
-                     MAX_SATISFACTION;
-            value -= Utilities::howManyNotInfectedPeople(infectedStudent->getPosition(), 2) * TWO_METER_INFECTION_PROB *
-                     MAX_SATISFACTION;
-        }
     } else {
         value = 0;
     }

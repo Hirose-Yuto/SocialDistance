@@ -42,7 +42,9 @@ bool Utilities::is_SocialDistanced() {
         if(!thereIsNoOneElse(student)) {
             Field::notSocialDistancedStudents.insert(student);
             Field::socialDistancedStudents.erase(student);
-            Field::waitingStudents.insert(student);
+            if(!student->getIsInfected()) {
+                Field::waitingStudents.insert(student);
+            }
             result = false;
         }
     }

@@ -15,9 +15,11 @@ public:
 
     static double probability(double eval_before, double eval_next, double temperature);
     static double temperature(double r);
-    constexpr static const double alpha = 0.5;
+    constexpr static const double alpha = 0.9;
     static int counter;
-    constexpr static const double maxCount = 5000.0;
+    constexpr static const double maxCount = 10000.0;
+
+    static int debugCounter;
 };
 
 #endif //SOCIALDISTANCE_SIMULATEDANNEALING_H

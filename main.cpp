@@ -11,6 +11,7 @@
 #include "Modules/Field.h"
 
 #include "./Search/HillClimbing.h"
+#include "./Search/SimulatedAnnealing.h"
 
 #include "Modules/EvaluateFunctions.h"
 
@@ -20,6 +21,8 @@ void printResult(int value, std::string relative_file_path = "Result/result.txt"
 void printResultPostScript(std::string message, std::string relative_file_path = "Result/result.txt");
 void printResultPostScript(int value, std::string relative_file_path = "Result/result.txt");
 
+void solve(int numOfTimes);
+
 int main(int argc, char **argv) {
     int numOfTimes;
     if(argc >= 2) {
@@ -27,6 +30,12 @@ int main(int argc, char **argv) {
     } else {
         numOfTimes = 1;
     }
+
+    solve(numOfTimes);
+
+}
+
+void solve(int numOfTimes) {
     double scoreSum = 0;
 
     for(int i = 0; i < numOfTimes; i++) {
@@ -42,8 +51,10 @@ int main(int argc, char **argv) {
             Field::regularEvent();
         }
 
+        SimulatedAnnealing::Init();
+
         while (!Utilities::is_SocialDistanced()) {
-            auto nextStep = Utilities::nextStep();//HillClimbing::nextStep(EvaluateFunctions::f1);
+            auto nextStep = SimulatedAnnealing::nextStep(EvaluateFunctions::f1);//HillClimbing::nextStep(EvaluateFunctions::f1);
             int x = nextStep->x;
             int y = nextStep->y;
             int student_id = nextStep->student_id;
@@ -63,10 +74,16 @@ int main(int argc, char **argv) {
         std::cout << "infectedStudents.size() : " << Field::infectedStudents.size() << std::endl;
         std::cout << i << "th Step Complete!" << std::endl << std::endl;
         scoreSum += Utilities::getSumOfSatisfaction();
+
+        printResultPostScript("infectedStudents.size() : " + std::to_string(Field::infectedStudents.size()),
+                              "Result/satis"+std::to_string(i)+".txt");
+        printResultPostScript("annealingCounter: " + std::to_string(SimulatedAnnealing::counter),
+                              "Result/satis"+std::to_string(i)+".txt");
+        printResultPostScript("debugCounter: " + std::to_string(SimulatedAnnealing::debugCounter),
+                              "Result/satis"+std::to_string(i)+".txt");
     }
 
     printResult((int)(scoreSum/numOfTimes));
-
 }
 
 void printResult(std::string message, std::string relative_file_path) {
