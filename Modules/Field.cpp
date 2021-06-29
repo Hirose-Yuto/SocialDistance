@@ -6,7 +6,7 @@
 
 
 
-Campus* Field::campus;
+Campus* Field::campus = new Campus();
 std::vector<Student*> Field::students;
 std::set<Student*> Field::infectedStudents;
 std::set<Student*> Field::notInfectedStudents;
@@ -16,7 +16,13 @@ std::set<Student*> Field::waitingStudents;
 std::array<std::array<int, MAP_SIZE_Y>, MAP_SIZE_X> Field::studentPosition;
 
 void Field::Init() {
-    Field::campus = new Campus();
+    std::vector<Student*>().swap(students);
+    std::set<Student*>().swap(infectedStudents);
+    std::set<Student*>().swap(notInfectedStudents);
+    std::set<Student*>().swap(socialDistancedStudents);
+    std::set<Student*>().swap(notSocialDistancedStudents);
+    std::set<Student*>().swap(waitingStudents);
+
    for(int i = 0; i < MAP_SIZE_X; i++) {
        for(int j = 0; j < MAP_SIZE_Y; j++) {
            Field::studentPosition[i][j] = NO_ONE;
@@ -49,7 +55,7 @@ double Field::distance(Position* p1, Position* p2) {
 }
 
 double Field::satisfactionDiff(double distance) {
-    return distance;
+    return distance * 5;
 }
 
 // O(1)
@@ -145,7 +151,9 @@ void Field::drawInfectionLotteries() {
                 // 感染したら登録
                 Field::infectedStudents.insert(student);
                 Field::notInfectedStudents.erase(student);
-                Field::waitingStudents.erase(student);
+                if(student->getIsOnset()) {
+                    Field::waitingStudents.erase(student);
+                }
             }
         }
     }
@@ -172,8 +180,10 @@ void Field::increaseSatisfactionLevel() {
         double diff = Field::satisfactionDiffByConversation(counter);
         student->addSatisfactionLevel(diff);
     }
+    // 満足度更新
+    Utilities::calculateSumOfSatisfaction();
 }
 
 double Field::satisfactionDiffByConversation(int num_of_people) {
-    return 1 - exp(-num_of_people);
+    return (1 - exp(-num_of_people))*0.01;
 }

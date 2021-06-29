@@ -7,15 +7,23 @@
 std::random_device Utilities::seed_gen;
 std::default_random_engine Utilities::engine(Utilities::seed_gen());
 std::uniform_real_distribution<> Utilities::dist(0.0, 1.0);
+double Utilities::sumOfSatisfaction;
 
-std::tuple<int, int, int> Utilities::nextStep(int counter) {
-    std::vector<int> a = {458, 542, 499, 501};
-    int x, y, student_id ;
+std::vector<Operation*> Utilities::generateOperationCandidates(int quantity = 1) {
+    std::vector<Operation*> operationCandidates;
+    operationCandidates.reserve(quantity);
+    for(int i = 0; i < quantity; i++) {
+        operationCandidates.push_back(nextStep());
+    }
+    return operationCandidates;
+}
 
+Operation* Utilities::nextStep() {
+    int x, y, student_id;
     do {
         x = Utilities::random_int(0, MAP_SIZE_X-1);
         y = Utilities::random_int(0, MAP_SIZE_Y-1);
-    } while(!Field::campus->is_InCampus(x, y) || !Utilities::thereIsNoOne(x, y));
+    } while(!Field::campus->is_InCampus(x, y));
 
     auto itr = Field::waitingStudents.begin();
     auto random_int = Utilities::random_int(0, Field::waitingStudents.size() - 1);
@@ -25,17 +33,18 @@ std::tuple<int, int, int> Utilities::nextStep(int counter) {
 
     student_id = (*(itr))->getStudentID();
 
-    if (counter < a.size()) {
-        student_id = a[counter];
-    }
-
-    return std::make_tuple(x, y, student_id);
+    return new Operation(x, y, student_id);
 }
 
 bool Utilities::is_SocialDistanced() {
     bool result = true;
     for(Student* student : Field::notInfectedStudents) {
-        result &= thereIsNoOneElse(student);
+        if(!thereIsNoOneElse(student)) {
+            Field::notSocialDistancedStudents.insert(student);
+            Field::socialDistancedStudents.erase(student);
+            Field::waitingStudents.insert(student);
+            result = false;
+        }
     }
     return result;
 }
@@ -44,19 +53,8 @@ bool Utilities::is_SocialDistanced() {
 bool Utilities::thereIsNoOneElse(Student* student) {
     int range = 2;
     // 自身も含むため-1として始める。
-    int counter = -1;
-    int x = student->getPosition()->x;
-    int y = student->getPosition()->y;
-    // マンハッタン距離で2以内
-    for (int i = -range; i <= range; i++) {
-        for (int j = -(range - abs(i)); j <= (range - abs(i)); j++) {
-            if(0 <= x+i && x+1 < MAP_SIZE_X && 0 <= y+j && y+j < MAP_SIZE_Y) {
-                if (Field::studentPosition[x + i][y + j] != NO_ONE) {
-                    counter++;
-                }
-            }
-        }
-    }
+    int counter = Utilities::howManyPeople(student->getPosition(), range);
+    counter--;
     return counter == 0;
 }
 
@@ -66,28 +64,66 @@ bool Utilities::thereIsNoOne(int x, int y) {
 
 bool Utilities::thereIsNoOne(Position* position) {
     int range = 2;
-    int counter = 0;
+    int counter = Utilities::howManyPeople(position, range);
+    return counter == 0;
+}
+
+std::vector<Student*> Utilities::peopleAround(Position *position, int range,
+                                               const std::function<bool(Student *)> &fn) {
+    std::vector<Student*> result;
     int x = position->x;
     int y = position->y;
     // マンハッタン距離で2以内
     for (int i = -range; i <= range; i++) {
         for (int j = -(range - abs(i)); j <= (range - abs(i)); j++) {
-            if(0 <= x+i && x+1 < MAP_SIZE_X && 0 <= y+j && y+j < MAP_SIZE_Y) {
+            if(0 <= x+i && x+i < MAP_SIZE_X && 0 <= y+j && y+j < MAP_SIZE_Y) {
                 if (Field::studentPosition[x + i][y + j] != NO_ONE) {
-                    counter++;
+                    Student* student = Field::students[Field::studentPosition[x + i][y + j]];
+                    if(fn(student)) {
+                        result.push_back(student);
+                    }
                 }
             }
         }
     }
-    return counter == 0;
+    return result;
 }
 
-double Utilities::sumOfSatisfaction() {
+std::vector<Student *> Utilities::infectedPeopleAround(Position *position, int range) {
+    return peopleAround(position, range, [](Student* student) {
+        return Field::infectedStudents.find(student) != Field::infectedStudents.end();
+    });
+}
+
+std::vector<Student *> Utilities::notInfectedPeopleAround(Position *position, int range) {
+    return peopleAround(position, range, [](Student* student) {
+        return Field::notInfectedStudents.find(student) != Field::notInfectedStudents.end();
+    });
+}
+
+int Utilities::howManyPeople(Position *position, int range, const std::function<bool(Student*)>& fn) {
+    return (int) peopleAround(position, range, fn).size();
+}
+
+int Utilities::howManyInfectedPeople(Position *position, int range) {
+    return howManyPeople(position, range, [](Student* student) {
+        return Field::infectedStudents.find(student) != Field::infectedStudents.end();
+    });
+}
+
+int Utilities::howManyNotInfectedPeople(Position *position, int range) {
+    return howManyPeople(position, range, [](Student* student) {
+        return Field::notInfectedStudents.find(student) != Field::notInfectedStudents.end();
+    });
+}
+
+
+double Utilities::calculateSumOfSatisfaction() {
     double sum = 0;
     for(Student* student: Field::students) {
         sum += student->getSatisfactionLevel();
     }
-    return sum;
+    return sumOfSatisfaction = sum;
 }
 
 

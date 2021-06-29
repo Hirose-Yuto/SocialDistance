@@ -14,9 +14,10 @@ void Student::move(Position* p) {
 bool Student::drawInfectionLottery() {
     if(Utilities::random_0_to_1() <= infection_probability) {
         this->is_infected = true;
-        this->satisfaction_level = 0;
+        this->satisfaction_level /= 2;
         if(Utilities::random_0_to_1() < ONSET_PROB) {
             this->is_onset = true;
+            this->satisfaction_level = 0;
         }
     }
     return this->is_infected;

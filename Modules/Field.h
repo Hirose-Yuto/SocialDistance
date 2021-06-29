@@ -34,9 +34,9 @@
 #define NO_ONE -1
 
 // 1メートルでの感染確率(マスクあり) <= マスクありなら9割以上カット (https://square.umin.ac.jp/nosmoke/material/amabie2.pdf)
-#define ONE_METER_INFECTION_PROB (1*0.03)
+#define ONE_METER_INFECTION_PROB (1*0.015)
 // 2メートルでの感染確率(マスクあり)
-#define TWO_METER_INFECTION_PROB (0.1*0.03)
+#define TWO_METER_INFECTION_PROB (0.1*0.015)
 // 3メートルでの感染確率(マスクあり) ※使うか不明
 #define THREE_METER_INFECTION_PROB (0.001*0.05)
 
@@ -133,7 +133,7 @@ public:
 
     /**
      * 会話による満足度の上昇値。
-     * 1 - exp(-num_of_people)
+     * (1 - exp(-num_of_people)) * 0.01
      * @param num_of_people 周りにいる人の人数。
      * @return
      */

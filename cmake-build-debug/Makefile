@@ -169,6 +169,33 @@ Modules/Campus.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SocialDistance.dir/build.make CMakeFiles/SocialDistance.dir/Modules/Campus.cpp.s
 .PHONY : Modules/Campus.cpp.s
 
+Modules/EvaluateFunctions.o: Modules/EvaluateFunctions.cpp.o
+
+.PHONY : Modules/EvaluateFunctions.o
+
+# target to build an object file
+Modules/EvaluateFunctions.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SocialDistance.dir/build.make CMakeFiles/SocialDistance.dir/Modules/EvaluateFunctions.cpp.o
+.PHONY : Modules/EvaluateFunctions.cpp.o
+
+Modules/EvaluateFunctions.i: Modules/EvaluateFunctions.cpp.i
+
+.PHONY : Modules/EvaluateFunctions.i
+
+# target to preprocess a source file
+Modules/EvaluateFunctions.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SocialDistance.dir/build.make CMakeFiles/SocialDistance.dir/Modules/EvaluateFunctions.cpp.i
+.PHONY : Modules/EvaluateFunctions.cpp.i
+
+Modules/EvaluateFunctions.s: Modules/EvaluateFunctions.cpp.s
+
+.PHONY : Modules/EvaluateFunctions.s
+
+# target to generate assembly for a file
+Modules/EvaluateFunctions.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SocialDistance.dir/build.make CMakeFiles/SocialDistance.dir/Modules/EvaluateFunctions.cpp.s
+.PHONY : Modules/EvaluateFunctions.cpp.s
+
 Modules/Field.o: Modules/Field.cpp.o
 
 .PHONY : Modules/Field.o
@@ -195,6 +222,33 @@ Modules/Field.s: Modules/Field.cpp.s
 Modules/Field.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SocialDistance.dir/build.make CMakeFiles/SocialDistance.dir/Modules/Field.cpp.s
 .PHONY : Modules/Field.cpp.s
+
+Modules/Operation.o: Modules/Operation.cpp.o
+
+.PHONY : Modules/Operation.o
+
+# target to build an object file
+Modules/Operation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SocialDistance.dir/build.make CMakeFiles/SocialDistance.dir/Modules/Operation.cpp.o
+.PHONY : Modules/Operation.cpp.o
+
+Modules/Operation.i: Modules/Operation.cpp.i
+
+.PHONY : Modules/Operation.i
+
+# target to preprocess a source file
+Modules/Operation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SocialDistance.dir/build.make CMakeFiles/SocialDistance.dir/Modules/Operation.cpp.i
+.PHONY : Modules/Operation.cpp.i
+
+Modules/Operation.s: Modules/Operation.cpp.s
+
+.PHONY : Modules/Operation.s
+
+# target to generate assembly for a file
+Modules/Operation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SocialDistance.dir/build.make CMakeFiles/SocialDistance.dir/Modules/Operation.cpp.s
+.PHONY : Modules/Operation.cpp.s
 
 Modules/Student.o: Modules/Student.cpp.o
 
@@ -250,6 +304,60 @@ Modules/Utilities.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SocialDistance.dir/build.make CMakeFiles/SocialDistance.dir/Modules/Utilities.cpp.s
 .PHONY : Modules/Utilities.cpp.s
 
+Search/HillClimbing.o: Search/HillClimbing.cpp.o
+
+.PHONY : Search/HillClimbing.o
+
+# target to build an object file
+Search/HillClimbing.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SocialDistance.dir/build.make CMakeFiles/SocialDistance.dir/Search/HillClimbing.cpp.o
+.PHONY : Search/HillClimbing.cpp.o
+
+Search/HillClimbing.i: Search/HillClimbing.cpp.i
+
+.PHONY : Search/HillClimbing.i
+
+# target to preprocess a source file
+Search/HillClimbing.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SocialDistance.dir/build.make CMakeFiles/SocialDistance.dir/Search/HillClimbing.cpp.i
+.PHONY : Search/HillClimbing.cpp.i
+
+Search/HillClimbing.s: Search/HillClimbing.cpp.s
+
+.PHONY : Search/HillClimbing.s
+
+# target to generate assembly for a file
+Search/HillClimbing.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SocialDistance.dir/build.make CMakeFiles/SocialDistance.dir/Search/HillClimbing.cpp.s
+.PHONY : Search/HillClimbing.cpp.s
+
+Search/SimulatedAnnealing.o: Search/SimulatedAnnealing.cpp.o
+
+.PHONY : Search/SimulatedAnnealing.o
+
+# target to build an object file
+Search/SimulatedAnnealing.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SocialDistance.dir/build.make CMakeFiles/SocialDistance.dir/Search/SimulatedAnnealing.cpp.o
+.PHONY : Search/SimulatedAnnealing.cpp.o
+
+Search/SimulatedAnnealing.i: Search/SimulatedAnnealing.cpp.i
+
+.PHONY : Search/SimulatedAnnealing.i
+
+# target to preprocess a source file
+Search/SimulatedAnnealing.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SocialDistance.dir/build.make CMakeFiles/SocialDistance.dir/Search/SimulatedAnnealing.cpp.i
+.PHONY : Search/SimulatedAnnealing.cpp.i
+
+Search/SimulatedAnnealing.s: Search/SimulatedAnnealing.cpp.s
+
+.PHONY : Search/SimulatedAnnealing.s
+
+# target to generate assembly for a file
+Search/SimulatedAnnealing.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SocialDistance.dir/build.make CMakeFiles/SocialDistance.dir/Search/SimulatedAnnealing.cpp.s
+.PHONY : Search/SimulatedAnnealing.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -289,15 +397,27 @@ help:
 	@echo "... Modules/Campus.o"
 	@echo "... Modules/Campus.i"
 	@echo "... Modules/Campus.s"
+	@echo "... Modules/EvaluateFunctions.o"
+	@echo "... Modules/EvaluateFunctions.i"
+	@echo "... Modules/EvaluateFunctions.s"
 	@echo "... Modules/Field.o"
 	@echo "... Modules/Field.i"
 	@echo "... Modules/Field.s"
+	@echo "... Modules/Operation.o"
+	@echo "... Modules/Operation.i"
+	@echo "... Modules/Operation.s"
 	@echo "... Modules/Student.o"
 	@echo "... Modules/Student.i"
 	@echo "... Modules/Student.s"
 	@echo "... Modules/Utilities.o"
 	@echo "... Modules/Utilities.i"
 	@echo "... Modules/Utilities.s"
+	@echo "... Search/HillClimbing.o"
+	@echo "... Search/HillClimbing.i"
+	@echo "... Search/HillClimbing.s"
+	@echo "... Search/SimulatedAnnealing.o"
+	@echo "... Search/SimulatedAnnealing.i"
+	@echo "... Search/SimulatedAnnealing.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

@@ -10,36 +10,85 @@
 #include "Modules/Campus.h"
 #include "Modules/Field.h"
 
-int main() {
-    Field::Init();
-    int counter = 0;
+#include "./Search/HillClimbing.h"
 
-    while(!Utilities::is_SocialDistanced()) {
-        auto nextStep = Utilities::nextStep(counter);
-        int x = std::get<0>(nextStep);
-        int y = std::get<1>(nextStep);
-        int student_id = std::get<2>(nextStep);
+#include "Modules/EvaluateFunctions.h"
 
-        Field::moveStudent(student_id, x, y);
+void printResult(std::string message, std::string relative_file_path = "Result/result.txt");
+void printResult(int value, std::string relative_file_path = "Result/result.txt");
 
-        Field::regularEvent();
+void printResultPostScript(std::string message, std::string relative_file_path = "Result/result.txt");
+void printResultPostScript(int value, std::string relative_file_path = "Result/result.txt");
 
-        auto socialDistancedStudents = Field::socialDistancedStudents;
-        auto notSocialDistancedStudents = Field::notSocialDistancedStudents;
-        auto studentPosition = Field::studentPosition;
-        auto infectedStudents = Field::infectedStudents;
+int main(int argc, char **argv) {
+    int numOfTimes;
+    if(argc >= 2) {
+        numOfTimes = std::stoi(argv[1]);
+    } else {
+        numOfTimes = 1;
+    }
+    double scoreSum = 0;
 
-        std::cout << "student_id : " << student_id << std::endl;
+    for(int i = 0; i < numOfTimes; i++) {
+        Field::Init();
+        // 感染者の周りはとりあえず動かす
+        std::vector<int> a = {458, 542, 499, 501};
+        for(int student_id : a) {
+            auto nextStep = Utilities::generateOperationCandidates(1)[0];
+            int x = nextStep->x;
+            int y = nextStep->y;
+            Field::moveStudent(student_id, x, y);
 
-        std::cout << "notSocialDistancedStudents.size() : " << notSocialDistancedStudents.size() << std::endl;
-        std::cout << "sumOfSatisfaction : " << (int)Utilities::sumOfSatisfaction() << std::endl;
-        counter++;
+            Field::regularEvent();
+        }
+
+        while (!Utilities::is_SocialDistanced()) {
+            auto nextStep = Utilities::nextStep();//HillClimbing::nextStep(EvaluateFunctions::f1);
+            int x = nextStep->x;
+            int y = nextStep->y;
+            int student_id = nextStep->student_id;
+
+            delete nextStep;
+            nextStep = nullptr;
+
+            Field::moveStudent(student_id, x, y);
+
+            Field::regularEvent();
+
+            std::cout << "waitingStudents.size() : " << Field::waitingStudents.size() << std::endl;
+            std::cout << "sumOfSatisfaction : " << (int) Utilities::getSumOfSatisfaction() << std::endl;
+            printResultPostScript((int) Utilities::getSumOfSatisfaction(), "Result/satis"+std::to_string(i)+".txt");
+        }
+
+        std::cout << "infectedStudents.size() : " << Field::infectedStudents.size() << std::endl;
+        std::cout << i << "th Step Complete!" << std::endl << std::endl;
+        scoreSum += Utilities::getSumOfSatisfaction();
     }
 
-    std::cout << "sumOfSatisfaction : " << (int)Utilities::sumOfSatisfaction() << std::endl;
-    auto infectedStudents = Field::infectedStudents;
-    std::cout << "infectedStudents.size() : " << infectedStudents.size() << std::endl;
+    printResult((int)(scoreSum/numOfTimes));
 
 }
 
+void printResult(std::string message, std::string relative_file_path) {
+    // 書き込むファイル
+    std::string output_file_path = "/Users/amida/書類/東工大講義資料/2021/2Q/Tu2_人工知能/プロジェクト課題/SocialDistance/" + relative_file_path;
+    std::ofstream ofs_file(output_file_path);
 
+    ofs_file << message;
+}
+
+void printResult(int value, std::string relative_file_path) {
+    printResult(std::to_string(value), relative_file_path);
+}
+
+void printResultPostScript(std::string message, std::string relative_file_path) {
+    // 書き込むファイル
+    std::string output_file_path = "/Users/amida/書類/東工大講義資料/2021/2Q/Tu2_人工知能/プロジェクト課題/SocialDistance/" + relative_file_path;
+    std::ofstream ofs_file(output_file_path, std::ios::app);
+
+    ofs_file << message << std::endl;
+}
+
+void printResultPostScript(int value, std::string relative_file_path) {
+    printResultPostScript(std::to_string(value) + ",", relative_file_path);
+}
