@@ -20,13 +20,15 @@ std::vector<Operation*> Utilities::generateOperationCandidates(int quantity = 1)
 
 Operation* Utilities::nextStep() {
     int x, y, student_id;
+    Position* position;
     do {
-        x = Utilities::random_int(0, MAP_SIZE_X-1);
-        y = Utilities::random_int(0, MAP_SIZE_Y-1);
-    } while(!Field::campus->is_InCampus(x, y));
+        position = Campus::positionsInCampus[Utilities::random_int(0, (int) Campus::positionsInCampus.size() - 1)];
+    } while(Field::studentPosition[position->x][position->y] == NO_ONE);
+    x = position->x;
+    y = position->y;
 
     auto itr = Field::waitingStudents.begin();
-    auto random_int = Utilities::random_int(0, Field::waitingStudents.size() - 1);
+    auto random_int = Utilities::random_int(0, (int)Field::waitingStudents.size() - 1);
     for (int i = 0; i < random_int; i++) {
         itr++;
     }

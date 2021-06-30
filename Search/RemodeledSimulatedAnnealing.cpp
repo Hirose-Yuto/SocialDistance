@@ -2,19 +2,19 @@
 // Created by Amida on 2021/06/29.
 //
 
-#include "SimulatedAnnealing.h"
+#include "RemodeledSimulatedAnnealing.h"
 
-std::string SimulatedAnnealing::class_name = "SimulatedAnnealing";
+std::string RemodeledSimulatedAnnealing::class_name = "RemodeledSimulatedAnnealing";
 
-int SimulatedAnnealing::counter;
-int SimulatedAnnealing::debugCounter;
+int RemodeledSimulatedAnnealing::counter;
+int RemodeledSimulatedAnnealing::debugCounter;
 
-void SimulatedAnnealing::Init() {
+void RemodeledSimulatedAnnealing::Init() {
     counter = 0;
     debugCounter = 0;
 }
 
-Operation* SimulatedAnnealing::nextStep(const std::function<double(Operation *)> &fn) {
+Operation* RemodeledSimulatedAnnealing::nextStep(const std::function<double(Operation *)> &fn) {
     Operation* step;
     do{
         step = Utilities::generateOperationCandidates(1)[0];
@@ -23,7 +23,7 @@ Operation* SimulatedAnnealing::nextStep(const std::function<double(Operation *)>
     return step;
 }
 
-bool SimulatedAnnealing::OK(Operation* operation, const std::function<double(Operation *)> &fn) {
+bool RemodeledSimulatedAnnealing::OK(Operation* operation, const std::function<double(Operation *)> &fn) {
     double currentEval = fn(new Operation(DEFAULT_X, DEFAULT_Y, DEFAULT_STUDENT));
     double nextEval = fn(operation);
 
@@ -34,15 +34,16 @@ bool SimulatedAnnealing::OK(Operation* operation, const std::function<double(Ope
     }
 }
 
-double SimulatedAnnealing::probability(double eval_before, double eval_next, double temperature) {
+double RemodeledSimulatedAnnealing::probability(double eval_before, double eval_next, double temperature) {
     if(eval_before <= eval_next) {
         return 1.0;
     } else {
         debugCounter++;
+        if(counter < 500) return 0.0;
         return exp((eval_next-eval_before)/temperature);
     }
 }
 
-double SimulatedAnnealing::temperature(double r) {
+double RemodeledSimulatedAnnealing::temperature(double r) {
     return std::pow(alpha, r/maxCount);
 }

@@ -7,8 +7,9 @@
 
 #include "Algorithm.h"
 
-class HillClimbing : public Algorithm{
+class HillClimbing{
 public:
+    static std::string class_name;
     static void Init(){};
     static Operation* nextStep(const std::function<double(Operation*)>& fn);
     static Operation* choose(const std::vector<Operation*>& operationCandidates, const std::function<double(Operation*)>& fn);

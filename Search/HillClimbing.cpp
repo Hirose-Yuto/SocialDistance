@@ -6,6 +6,8 @@
 
 #include "limits"
 
+std::string HillClimbing::class_name = "HillClimbing";
+
 Operation* HillClimbing::nextStep(const std::function<double(Operation*)>& fn) {
     auto step =  choose(Utilities::generateOperationCandidates(5), fn);
     return step;

@@ -2,12 +2,12 @@
 // Created by Amida on 2021/06/29.
 //
 
-#ifndef SOCIALDISTANCE_SIMULATEDANNEALING_H
-#define SOCIALDISTANCE_SIMULATEDANNEALING_H
+#ifndef SOCIALDISTANCE_REMODELEDSIMULATEDANNEALING_H
+#define SOCIALDISTANCE_REMODELEDSIMULATEDANNEALING_H
 
 #include "Algorithm.h"
 
-class SimulatedAnnealing {
+class RemodeledSimulatedAnnealing {
 public:
     static std::string class_name;
 
@@ -24,4 +24,5 @@ public:
     static int debugCounter;
 };
 
-#endif //SOCIALDISTANCE_SIMULATEDANNEALING_H
+
+#endif //SOCIALDISTANCE_REMODELEDSIMULATEDANNEALING_H

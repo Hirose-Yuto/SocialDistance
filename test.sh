@@ -7,6 +7,9 @@ clang++ -o main.out -std=c++14 main.cpp \
  Modules/Utilities.cpp \
  Modules/EvaluateFunctions.cpp \
  Modules/Operation.cpp \
- Search/HillClimbing.cpp
+ Search/HillClimbing.cpp \
+ Search/RemodeledSimulatedAnnealing.cpp \
+ Search/Shortest.cpp \
+ Search/Random.cpp
 ./main.out
 rm ./main.out

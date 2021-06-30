@@ -3,7 +3,28 @@
 //
 
 #include "Campus.h"
+#include "Utilities.h"
 
+std::vector<Position*> Campus::positionsInCampus;
+
+std::vector<Position*> Campus::green_northMap;
+std::vector<Position*> Campus::east_west_southMap;
+std::vector<Position*> Campus::stoneMap;
+std::vector<std::vector<Position*>*> Campus::buildings;
+
+void Campus::Init() {
+    green_northMap = getMapData("green_north.csv");
+    east_west_southMap = getMapData("east_west_south.csv");
+    stoneMap = getMapData("stone.csv");
+
+    for(int i = 0; i < MAP_SIZE_X; i++) {
+        for(int j = 0; j < MAP_SIZE_Y; j++) {
+            if(is_InCampus(i, j)) {
+                positionsInCampus.push_back(new Position(i, j));
+            }
+        }
+    }
+}
 
 bool Campus::is_InCampus(int x, int y) {
     return is_InCampus(new Position(x, y));
@@ -11,9 +32,9 @@ bool Campus::is_InCampus(int x, int y) {
 
 // https://www.nttpc.co.jp/technology/number_algorithm.html
 bool Campus::is_InCampus(Position* position) {
-    return Campus::is_InObject(position, &this->green_northMap)
-    || Campus::is_InObject(position, &this->east_west_southMap)
-    || Campus::is_InObject(position, &this->stoneMap);
+    return Campus::is_InObject(position, &green_northMap)
+    || Campus::is_InObject(position, &east_west_southMap)
+    || Campus::is_InObject(position, &stoneMap);
 }
 
 bool Campus::is_InBuilding(Position* position) {

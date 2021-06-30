@@ -30,7 +30,7 @@
 #define TAKI_WIDTH 42
 #define TAKI_HEIGHT 28
 
-// 生徒の配置情報用
+// 学生の配置情報用
 #define NO_ONE -1
 
 // 1メートルでの感染確率(マスクあり) <= マスクありなら9割以上カット (https://square.umin.ac.jp/nosmoke/material/amabie2.pdf)
@@ -49,30 +49,28 @@ class Student;
 
 class Field{
 public:
-    /** @var キャンパス情報 */
-    static Campus* campus;
-    /** @var 生徒たち */
+    /** @var 学生たち */
     static std::vector<Student*> students;
-    /** @var 感染した生徒たち */
+    /** @var 感染した学生たち */
     static std::set<Student*> infectedStudents;
-    /** @var 感染してない生徒たち */
+    /** @var 感染してない学生たち */
     static std::set<Student*> notInfectedStudents;
-    /** @var Social Distanceをとった生徒たち */
+    /** @var Social Distanceをとった学生たち */
     static std::set<Student*> socialDistancedStudents;
-    /** @var Social Distanceをとってない生徒たち */
+    /** @var Social Distanceをとってない学生たち */
     static std::set<Student*> notSocialDistancedStudents;
-    /** @var 移動待ちの(=感染しておらず、Social Distanceをとってない)生徒たち*/
+    /** @var 移動待ちの(=感染しておらず、Social Distanceをとってない)学生たち*/
     static std::set<Student*> waitingStudents;
-    /** @var 生徒の配置情報 */
+    /** @var 学生の配置情報 */
     static std::array<std::array<int, MAP_SIZE_Y>, MAP_SIZE_X> studentPosition;
-
+    
     /**
      * 初期化
      */
     static void Init();
 
     /**
-     * 生徒の配置情報をゲット
+     * 学生の配置情報をゲット
      * @return
      */
     static std::array<std::array<int, MAP_SIZE_Y>, MAP_SIZE_X> getStudentPosition();
@@ -94,7 +92,7 @@ public:
 
     static void moveStudent(int student_id, int x, int y);
     /**
-     * 生徒を移動させる。
+     * 学生を移動させる。
      * @param student_id
      * @param position
      */
@@ -125,7 +123,7 @@ public:
 
     /**
      * 周りの人の感染確率を変動させる。
-     * @param student 中心の生徒
+     * @param student 中心の学生
      * @param distance 距離(マンハッタン距離)
      * @param probability 感染確率
      */

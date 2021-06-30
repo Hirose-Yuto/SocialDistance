@@ -38,6 +38,7 @@ public:
         if(id == FIRST_PATIENT) {
             this->is_infected = true;
             this->is_onset = true;
+            this->satisfaction_level = 0;
         }
     }
 

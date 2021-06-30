@@ -8,6 +8,9 @@ clang++ -o main.out -std=c++14 main.cpp \
  Modules/EvaluateFunctions.cpp \
  Modules/Operation.cpp \
  Search/HillClimbing.cpp \
- Search/SimulatedAnnealing.cpp
-./main.out 5
+ Search/SimulatedAnnealing.cpp \
+ Search/RemodeledSimulatedAnnealing.cpp \
+ Search/Shortest.cpp \
+ Search/Random.cpp
+./main.out 10
 rm ./main.out

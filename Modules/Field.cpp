@@ -6,7 +6,6 @@
 
 
 
-Campus* Field::campus = new Campus();
 std::vector<Student*> Field::students;
 std::set<Student*> Field::infectedStudents;
 std::set<Student*> Field::notInfectedStudents;
@@ -121,7 +120,7 @@ void Field::changeInfectionProbability(Student *student, int distance, double pr
         // マンハッタン距離で考える。
         if(Field::studentPosition[x+i][y+(distance-abs(i))] != NO_ONE) {
             Student* changed_student = Field::students[Field::studentPosition[x+i][y+(distance-abs(i))]];
-            if(Field::campus->is_InBuilding(changed_student->getPosition())) {
+            if(Campus::is_InBuilding(changed_student->getPosition())) {
                 // 室内だと1.5倍に
                 changed_student->setInfectionProbability(probability * PROB_MAGNIFICATION_IF_IN_BUILDING);
             } else {
@@ -130,7 +129,7 @@ void Field::changeInfectionProbability(Student *student, int distance, double pr
         }
         if(Field::studentPosition[x+i][y-(distance-abs(i))] != NO_ONE) {
             Student* changed_student = Field::students[Field::studentPosition[x+i][y-(distance-abs(i))]];
-            if(Field::campus->is_InBuilding(changed_student->getPosition())) {
+            if(Campus::is_InBuilding(changed_student->getPosition())) {
                 // 室内だと1.5倍に
                 changed_student->setInfectionProbability(probability * PROB_MAGNIFICATION_IF_IN_BUILDING);
             } else {
@@ -146,7 +145,7 @@ void Field::drawInfectionLotteries() {
         if(!student->getIsInfected()) {
             // O(1)
             if(student->drawInfectionLottery()) {
-                std::cout << student->getStudentID() << " got infected!" << std::endl;
+                // std::cout << student->getStudentID() << " got infected!" << std::endl;
                 // O(1)
                 // 感染したら登録
                 Field::infectedStudents.insert(student);

@@ -21,6 +21,8 @@ public:
      * @return
      */
     static double f1(Operation* operation);
+
+    static double f2(Operation* operation);
 };
 
 #endif //SOCIALDISTANCE_EVALUATEFUNCTIONS_H
