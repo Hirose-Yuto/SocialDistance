@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
 void solve(int numOfTimes) {
     Campus::Init();
 
-    auto algorithm = Algorithm<RemodeledSimulatedAnnealing>();
+    auto algorithm = Algorithm<HillClimbing>();
 
     for(int i = 0; i < numOfTimes; i++) {
         Field::Init();

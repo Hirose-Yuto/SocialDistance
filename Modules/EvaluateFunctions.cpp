@@ -43,12 +43,13 @@ double EvaluateFunctions::f2(Operation* operation) {
         // 移動コスト
         value -= Field::satisfactionDiff(Field::distance(operation->position, student->getPosition()));
 
+        int nextHowMany = Utilities::howManyPeople(operation->position, 2);
         int alpha = 10;
         // 会話考慮
-        value += Utilities::howManyPeople(operation->position, 2) * 3 * alpha;
+        value += nextHowMany * 3 * alpha;
 
         // SocialDistance考慮
-        value += 70 * alpha - std::pow(Utilities::howManyPeople(operation->position, 2), 2) * alpha;
+        value += 70 * alpha - std::pow(nextHowMany, 2) * alpha;
     } else {
         value = 0;
     }

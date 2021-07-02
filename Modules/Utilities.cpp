@@ -23,7 +23,7 @@ Operation* Utilities::nextStep() {
     Position* position;
     do {
         position = Campus::positionsInCampus[Utilities::random_int(0, (int) Campus::positionsInCampus.size() - 1)];
-    } while(Field::studentPosition[position->x][position->y] == NO_ONE);
+    } while(Field::studentPosition[position->x][position->y] != NO_ONE);
     x = position->x;
     y = position->y;
 
