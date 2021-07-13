@@ -136,8 +136,6 @@ public:
      * @return
      */
     static double satisfactionDiffByConversation(int num_of_people);
-
-
 };
 
 

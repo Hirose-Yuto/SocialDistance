@@ -29,12 +29,15 @@ public:
     }
 
     std::string showResult(int numOfTimes) {
-
         return T::class_name + " & "
         + std::to_string((int)(scoreSum/numOfTimes)) + " & "
         + std::to_string((int)std::pow(squaredScoreSum/numOfTimes - std::pow(scoreSum/numOfTimes, 2), 0.5)) + " & "
         + std::to_string(((double)clock_diff_sum/CLOCKS_PER_SEC/numOfTimes)) + "sec & "
         + std::to_string((double)infectedPeopleSum/numOfTimes) + " \\\\";
+    }
+
+    std::string className() {
+        return T::class_name;
     }
 };
 
